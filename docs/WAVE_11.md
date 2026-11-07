@@ -48,17 +48,17 @@ git init -b main
 git add .
 git status                 # confirm no .env, target/, node_modules/, dist/
 git commit -m "feat: LOOPTAG v0 — deposit-backed claims on Stellar"
-gh repo create d3vobed/looptag \
+gh repo create looptag-labs/looptag \
   --public \
   --source . \
   --remote origin \
   --push \
   --description "Deposit-backed, transferable claims for reusable physical assets on Stellar (Soroban)."
-gh repo edit d3vobed/looptag \
+gh repo edit looptag-labs/looptag \
   --add-topic stellar,soroban,blockchain,circular-economy,defi,typescript,rust
 ```
 
-Then open `https://github.com/d3vobed/looptag` and confirm:
+Then open `https://github.com/looptag-labs/looptag` and confirm:
 
 - The README renders and the CI badge appears.
 - Actions → CI runs green.
@@ -80,7 +80,7 @@ With `gh` authenticated:
 
 ```bash
 cd /home/obx/looptag
-GITHUB_REPOSITORY=d3vobed/looptag \
+GITHUB_REPOSITORY=looptag-labs/looptag \
 GH_TOKEN="$(gh auth token)" \
 node scripts/seed-github.mjs
 ```
@@ -98,7 +98,7 @@ Expected result: **22 open issues**, including **4 `good first issue`** tasks.
 
 In the Drips app/dashboard:
 
-1. Install the **Drips Wave GitHub App** on the `d3vobed` account or the
+1. Install the **Drips Wave GitHub App** on the `looptag-labs` organization (or the
    organization that owns the repo.
 2. Grant access to `looptag` only (least privilege).
 3. Sync the repository from the Drips dashboard.
@@ -111,7 +111,7 @@ need to approve the installation.
 ## 5. Apply to the Stellar Wave Program
 
 1. Open the Wave Program application in the Drips dashboard.
-2. Select the Stellar Wave program and the `d3vobed/looptag` repository.
+2. Select the Stellar Wave program and the `looptag-labs/looptag` repository.
 3. Use the README and the testnet evidence as the project description.
 4. Submit before **9 November 2026, 23:59 UTC**.
 5. Wait for approval. Do not add fake issues or duplicate repos to increase the

@@ -2,7 +2,7 @@
 
 **Deposit-backed, transferable claims for reusable physical assets on Stellar.**
 
-[![CI](https://github.com/d3vobed/looptag/actions/workflows/ci.yml/badge.svg)](https://github.com/d3vobed/looptag/actions/workflows/ci.yml)
+[![CI](https://github.com/looptag-labs/looptag/actions/workflows/ci.yml/badge.svg)](https://github.com/looptag-labs/looptag/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-0b1220.svg)](LICENSE)
 [![Stellar testnet](https://img.shields.io/badge/Stellar-testnet-7b61ff.svg)](https://stellar.expert/explorer/testnet/contract/CCTM224EKYEXNSULQBEW2HRG5CICUWWE46MLSRSASJZUQKXI5E5LK5GT)
 

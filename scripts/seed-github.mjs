@@ -3,7 +3,7 @@
  * Create the LOOPTAG labels and issue backlog on GitHub.
  *
  * Usage:
- *   GITHUB_TOKEN=... GITHUB_REPOSITORY=d3vobed/looptag node scripts/seed-github.mjs
+ *   GITHUB_TOKEN=... GITHUB_REPOSITORY=looptag-labs/looptag node scripts/seed-github.mjs
  *
  * The script is idempotent: existing labels are left alone and issues with the
  * same title are skipped. It never prints the token.
@@ -12,7 +12,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
-const repository = process.env.GITHUB_REPOSITORY || "d3vobed/looptag";
+const repository = process.env.GITHUB_REPOSITORY || "looptag-labs/looptag";
 const [owner, repo] = repository.split("/");
 
 if (!token) {
