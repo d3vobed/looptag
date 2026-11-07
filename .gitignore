@@ -1,0 +1,23 @@
+# Node
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Rust / Soroban
+target/
+contracts/target/
+contracts/**/test_snapshots/
+*.wasm
+
+# Local secrets and Stellar CLI state
+.env
+.env.*
+!.env.example
+.stellar/
+*.pem
+*.key
+
+# Logs and OS files
+*.log
+.DS_Store

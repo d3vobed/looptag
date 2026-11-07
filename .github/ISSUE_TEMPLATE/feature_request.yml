@@ -1,0 +1,63 @@
+name: Feature request
+description: Propose a scoped improvement.
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        LOOPTAG prefers a small number of complete features over many partial
+        ones. Please describe the user problem before the implementation.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What can a user not do today, and why does it matter?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: The smallest useful version of the change.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Contract
+        - SDK
+        - Indexer
+        - Demo
+        - Docs
+        - CI
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How would a reviewer know this is done?
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked the roadmap and existing issues.
+          required: true
+        - label: This does not require a secret key or an admin custody backdoor.
+          required: true

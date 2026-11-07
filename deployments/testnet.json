@@ -1,0 +1,40 @@
+{
+  "network": "testnet",
+  "networkPassphrase": "Test SDF Network ; September 2015",
+  "contractId": "CCTM224EKYEXNSULQBEW2HRG5CICUWWE46MLSRSASJZUQKXI5E5LK5GT",
+  "wasmHash": "dd4eeb3d6f27857e7ac2be2f99c1c94600c6718b6e521fdc4ee833b6de871a0f",
+  "wasmSizeBytes": 14817,
+  "deployedAt": "2026-11-07T23:10:00Z",
+  "depositToken": {
+    "code": "XLM",
+    "contractId": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+    "decimals": 7
+  },
+  "demo": {
+    "claimId": "1",
+    "serial": "CUP-042",
+    "serialHash": "fa6ceb8d7a5cd1b8bc7c5959830c30704aad79dbe1ba90a794f04de6868712b1",
+    "depositStroops": "20000000",
+    "depositDisplay": "2 XLM",
+    "issuer": "GDI6UIHJGRSHN4FF6FWXUWSVQYYAV2BBH734S3LCYCQQCWYWLLEQ2UXJ",
+    "originalOwner": "GANINHD7GYIUIYH7WTGQ25TZ3BMEJG5JIW6JIJNVOB7PQPWABVW5LQJP",
+    "finalOwner": "GCQK5S33PEWHTJQYSJFVKCWSCDF73XQEDH4GPD3UDCCPZWP7TNKP4ACT",
+    "returnStation": "GDSROSZJFCNGBLFFY3NKMKKC5CMCOXTCAYTL7DFZMRT2P5NF4J4RVBWH",
+    "issuedAt": "2026-11-07T23:13:37Z",
+    "returnedAt": "2026-11-07T23:14:12Z",
+    "finalStatus": "Redeemed",
+    "finalMerchantOutstandingStroops": "0",
+    "finalOwnerBalanceStroops": "100040000000"
+  },
+  "transactions": {
+    "uploadWasm": "da78b492e416ac42f8397062241ab77441d14eec4cd07f0cc88f8b2b1c237fda",
+    "deployContract": "fd878f5a73e9d9a0af4e9869e699f36b13f9cef9cf4978a97c5fe8f711327706",
+    "initialize": "20de6a93cc5086a697a333722eed90d456a5875129c90765b2f90d641067412e",
+    "registerMerchant": "67bfb2ce0326d2867ffddee7a1e3e41eb1996286b0863c3e6582cb658f8f20d4",
+    "registerStation": "72132b38c7d85a0e55be9ed1308d7a9109ba4e66b034aac2d2bbbcbbe22e8186",
+    "issueClaim": "1c0850116da732caafee8be89ed4424d9dbbf1942d56e1de4ab7220bf7aec4ad",
+    "transferClaim": "0101956d7fa09fd65344a0b6fe9df89f569f251322f5585ac6cb8bde314ac977",
+    "authorizeReturn": "60e7794de5b1cb6f1a0a8fa938d9795254c3f6b32fdab1d719694709d0ff1cc4",
+    "redeem": "800b81872be058d4aaab8de70a07e232d6b26ad06e0ccc11288e3e9f2490d476"
+  }
+}

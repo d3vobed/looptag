@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LOOPTAG — Stellar testnet demo</title>
+    <meta
+      name="description"
+      content="A read-only snapshot of a real LOOPTAG deposit claim lifecycle on Stellar testnet."
+    />
+    <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+
+    <header class="site-header">
+      <a class="brand" href="./">
+        <img src="../assets/logo.svg" alt="" width="40" height="40" />
+        <span>LOOPTAG</span>
+      </a>
+      <div class="header-meta">
+        <span class="pill pill-green">Stellar testnet</span>
+        <a class="text-link" href="#evidence">Evidence</a>
+        <a
+          class="text-link"
+          href="https://github.com/d3vobed/looptag"
+          rel="noreferrer"
+          >GitHub</a
+        >
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Deposit claim #1 · 2 XLM</p>
+        <h1>The deposit travels<br />with the cup.</h1>
+        <p class="lede">
+          A merchant locks a refundable deposit in a Soroban contract. The claim
+          can be gifted or resold. When the item comes back, an authorised
+          station attests the return and the contract pays whoever owns the
+          claim at that moment.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#claim">Inspect the claim</a>
+          <a
+            class="button button-ghost"
+            id="contract-link"
+            href="#"
+            rel="noreferrer"
+            >View contract</a
+          >
+        </div>
+        <p class="notice">
+          Read-only demo of a real testnet run. No wallet is connected and no
+          transaction is signed from this page.
+        </p>
+      </section>
+
+      <section class="dashboard" id="claim">
+        <article class="card claim-card">
+          <div class="card-head">
+            <div>
+              <p class="eyebrow">On-chain claim</p>
+              <h2 id="claim-title">Claim #1</h2>
+            </div>
+            <span class="pill" id="status-pill">Loading…</span>
+          </div>
+
+          <div class="amount-row">
+            <div>
+              <p class="label">Deposit</p>
+              <p class="amount" id="deposit">—</p>
+            </div>
+            <div class="qr">
+              <img
+                src="claim-qr.svg"
+                alt="QR payload for claim 1 and serial CUP-042"
+                width="132"
+                height="132"
+              />
+              <p class="label">Return tag</p>
+            </div>
+          </div>
+
+          <dl class="facts">
+            <div>
+              <dt>Serial</dt>
+              <dd id="serial">—</dd>
+            </div>
+            <div>
+              <dt>Serial hash</dt>
+              <dd class="mono" id="serial-hash">—</dd>
+            </div>
+            <div>
+              <dt>Issuer</dt>
+              <dd class="mono" id="issuer">—</dd>
+            </div>
+            <div>
+              <dt>Original owner</dt>
+              <dd class="mono" id="original-owner">—</dd>
+            </div>
+            <div>
+              <dt>Current owner</dt>
+              <dd class="mono" id="final-owner">—</dd>
+            </div>
+            <div>
+              <dt>Return station</dt>
+              <dd class="mono" id="return-station">—</dd>
+            </div>
+            <div>
+              <dt>Issued</dt>
+              <dd id="issued-at">—</dd>
+            </div>
+            <div>
+              <dt>Return attested</dt>
+              <dd id="returned-at">—</dd>
+            </div>
+          </dl>
+
+          <div class="state-strip" aria-label="Claim lifecycle state">
+            <span class="state done">Active</span>
+            <span class="state-arrow">→</span>
+            <span class="state done">Return authorized</span>
+            <span class="state-arrow">→</span>
+            <span class="state done">Redeemed</span>
+          </div>
+        </article>
+
+        <aside class="card qr-card">
+          <p class="eyebrow">The physical tag</p>
+          <h2>Serial-bound, not bearer-bound</h2>
+          <p>
+            The QR carries the contract, claim id, and a SHA-256 hash of the
+            serial. The station must still read the item's serial and submit the
+            hash. A copied tag from another item fails the on-chain check.
+          </p>
+          <p class="mono qr-payload" id="qr-payload">—</p>
+          <a class="text-link" href="../docs/QR_FORMAT.md">Read the QR format →</a>
+        </aside>
+      </section>
+
+      <section class="card timeline-card" id="evidence">
+        <div class="card-head">
+          <div>
+            <p class="eyebrow">Transaction trail</p>
+            <h2>Real testnet evidence</h2>
+          </div>
+          <span class="pill pill-blue" id="network-pill">testnet</span>
+        </div>
+        <ol class="timeline" id="timeline">
+          <li class="loading">Loading deployment manifest…</li>
+        </ol>
+        <p class="muted" id="manifest-note"></p>
+      </section>
+
+      <section class="grid-2">
+        <article class="card">
+          <p class="eyebrow">Deployment</p>
+          <h2>Contract</h2>
+          <dl class="facts compact">
+            <div>
+              <dt>Contract id</dt>
+              <dd class="mono" id="contract-id">—</dd>
+            </div>
+            <div>
+              <dt>WASM hash</dt>
+              <dd class="mono" id="wasm-hash">—</dd>
+            </div>
+            <div>
+              <dt>Deposit token</dt>
+              <dd class="mono" id="deposit-token">—</dd>
+            </div>
+            <div>
+              <dt>Merchant outstanding</dt>
+              <dd id="outstanding">—</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="card">
+          <p class="eyebrow">Verify it yourself</p>
+          <h2>Do not trust this page</h2>
+          <p>
+            The page reads a committed manifest. The chain is the source of
+            truth. Open the contract on Stellar Expert, then run the read-only
+            commands below.
+          </p>
+          <pre><code>stellar contract invoke \
+  --id &lt;contract-id&gt; --network testnet -- \
+  get_claim --claim_id 1
+
+stellar contract invoke \
+  --id &lt;contract-id&gt; --network testnet -- \
+  get_merchant --merchant &lt;issuer&gt;</code></pre>
+          <a class="text-link" id="expert-link" href="#" rel="noreferrer"
+            >Open on Stellar Expert →</a
+          >
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <div class="brand small">
+        <img src="../assets/logo.svg" alt="" width="28" height="28" />
+        <span>LOOPTAG</span>
+      </div>
+      <p>
+        Testnet software, not audited. Built for the Stellar Wave program. See
+        <a href="../SECURITY.md">SECURITY.md</a> before using real value.
+      </p>
+    </footer>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

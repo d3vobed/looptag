@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="LOOPTAG logo">
+  <rect width="256" height="256" rx="56" fill="#0b1220"/>
+  <path d="M78 160V96a20 20 0 0 1 20-20h60" fill="none" stroke="#8b7bff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M178 96v64a20 20 0 0 1-20 20H98" fill="none" stroke="#34d399" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="178" cy="96" r="14" fill="#8b7bff"/>
+  <circle cx="78" cy="160" r="14" fill="#34d399"/>
+  <path d="M128 108v40" stroke="#f8fafc" stroke-width="12" stroke-linecap="round"/>
+  <path d="M108 128h40" stroke="#f8fafc" stroke-width="12" stroke-linecap="round"/>
+</svg>

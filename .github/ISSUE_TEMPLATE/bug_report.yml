@@ -1,0 +1,64 @@
+name: Bug report
+description: Something is broken or behaves differently from the docs.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please do **not** include secret keys, `.env`
+        contents, or local Stellar CLI config. For an exploitable security issue,
+        follow [SECURITY.md](../../SECURITY.md) instead of opening a public issue.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the actual behaviour.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Commands, inputs, transaction hashes, or a minimal test.
+      placeholder: |
+        1. pnpm --filter @looptag/sdk test
+        2. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Contract
+        - SDK
+        - Deployment scripts
+        - Demo
+        - Docs
+        - CI
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Node, pnpm, Rust, Stellar CLI versions.
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I removed all secrets and private keys from this report.
+          required: true
+        - label: I searched existing issues for a duplicate.
+          required: true
