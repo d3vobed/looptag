@@ -17,7 +17,9 @@ export interface ParsedAmount {
 
 /**
  * Parse a human amount such as `"2"`, `"2.5"` or `"0.0000001"` into base units.
- * Rejects negative values, scientific notation, and more than 7 decimal places.
+ * Prefer passing a plain decimal string for money values to avoid IEEE-754
+ * floating-point precision loss. Rejects negative values, scientific notation,
+ * ambiguous exponent numbers, and more than `decimals` decimal places.
  */
 export function toBaseUnits(
   amount: string | number,
@@ -30,7 +32,9 @@ export function toBaseUnits(
   }
 
   const text =
-    typeof amount === "number" ? numberToPlainString(amount) : amount.trim();
+    typeof amount === "number"
+      ? numberToPlainString(amount, decimals)
+      : amount.trim();
   if (text === "") {
     throw new TypeError("amount must not be empty");
   }
@@ -100,15 +104,33 @@ export function formatAmount(
   return `${fromBaseUnits(value, decimals)} ${assetCode}`;
 }
 
-function numberToPlainString(value: number): string {
+function numberToPlainString(value: number, decimals: number): string {
   if (!Number.isFinite(value)) {
     throw new TypeError(`amount must be finite, got ${value}`);
   }
-  // `String(2)` is "2" and `String(0.0000001)` is "1e-7". Convert the latter
-  // without ever doing arithmetic on the token amount.
+  if (value < 0) {
+    throw new RangeError("amount must not be negative");
+  }
+  // `String(2)` is "2" and `String(0.0000001)` is "1e-7". Convert exact small
+  // decimals without rounding, and reject any exponent-notation number that
+  // cannot be represented losslessly at the requested precision.
   const text = String(value);
   if (!text.includes("e") && !text.includes("E")) {
     return text;
   }
-  return value.toFixed(STELLAR_DECIMALS).replace(/0+$/, "").replace(/\.$/, "");
+  const match = /^([1-9])(?:\.(\d+))?[eE]-(\d+)$/.exec(text);
+  if (!match) {
+    throw new RangeError(
+      `amount ${text} cannot be represented exactly as a number; pass a plain decimal string`,
+    );
+  }
+  const [, head = "0", frac = "", expText = "0"] = match;
+  const exp = Number(expText);
+  const totalDecimals = exp + frac.length;
+  if (totalDecimals > decimals) {
+    throw new RangeError(
+      `amount ${text} requires ${totalDecimals} decimal places (${decimals} allowed); pass a plain decimal string`,
+    );
+  }
+  return `0.${"0".repeat(exp - 1)}${head}${frac}`;
 }

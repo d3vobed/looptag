@@ -192,11 +192,12 @@ const payload = encodeClaimQr({
 });
 
 const scanned = decodeClaimQr(payload); // verifies the checksum
-const deposit = toStroops("2");         // 20000000n
+const deposit = toStroops("2");         // 20000000n (always pass money as a plain decimal string)
 console.log(fromStroops(deposit));      // "2"
 ```
 
-The SDK is deliberately small. It contains exact amount handling, QR
+The SDK is deliberately small. It contains exact amount handling (pass money as
+a plain decimal string to avoid floating-point rounding), QR
 encoding/decoding, claim state helpers, a typed contract client, and a typed
 event decoder. Transaction-building helpers and an indexer are tracked as
 scoped issues.
