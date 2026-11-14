@@ -6,6 +6,7 @@
  * station scans the tag, hashes the serial it reads from the item, and submits
  * the hash to `authorize_return`. The contract checks it against the claim.
  */
+import { Buffer } from "buffer";
 
 export type LooptagNetwork = "testnet" | "mainnet" | "futurenet" | "local";
 
@@ -16,6 +17,18 @@ export interface ClaimQrPayload {
   /** On-chain claim id as a decimal string. */
   claimId: string;
   /** Lowercase hex SHA-256 of the physical serial number (64 characters). */
+  serialHash: string;
+}
+
+export interface OnChainClaimRef {
+  id: bigint | number | string;
+  serial_hash: Uint8Array | Buffer | string;
+}
+
+export interface ClaimQrFromClaimOptions {
+  network: LooptagNetwork;
+  contractId: string;
+  /** Expected hex SHA-256 of the physical item's serial number, verified against `claim.serial_hash`. */
   serialHash: string;
 }
 
@@ -90,6 +103,58 @@ export async function hashSerial(serial: string): Promise<string> {
 /** Validate a Stellar contract id without contacting the network. */
 export function isValidContractId(value: string): boolean {
   return CONTRACT_ID_RE.test(value);
+}
+
+/** Convert a 64-character hex SHA-256 serial hash (case-insensitive) into a 32-byte Buffer. */
+export function serialHashToBuffer(serialHash: string): Buffer {
+  const normalized = serialHash.trim().toLowerCase();
+  if (!SERIAL_HASH_RE.test(normalized)) {
+    throw new TypeError(
+      `serial hash must be 64 lowercase hex characters, got "${serialHash}"`,
+    );
+  }
+  return Buffer.from(normalized, "hex");
+}
+
+/**
+ * Build a validated `ClaimQrPayload` from an on-chain `Claim` record, verifying
+ * that `options.serialHash` matches `claim.serial_hash` (case-insensitive).
+ */
+export function claimToQrPayload(
+  claim: OnChainClaimRef,
+  options: ClaimQrFromClaimOptions,
+): ClaimQrPayload {
+  const expectedHash = serialHashToBuffer(options.serialHash).toString("hex");
+  const onChainHash =
+    typeof claim.serial_hash === "string"
+      ? serialHashToBuffer(claim.serial_hash).toString("hex")
+      : Buffer.from(claim.serial_hash).toString("hex").toLowerCase();
+
+  if (!SERIAL_HASH_RE.test(onChainHash)) {
+    throw new TypeError(
+      `claim serial_hash must be 32 bytes (64 hex characters), got "${onChainHash}"`,
+    );
+  }
+  if (expectedHash !== onChainHash) {
+    throw new Error(
+      `serial hash mismatch: expected "${expectedHash}" to match claim serial_hash "${onChainHash}"`,
+    );
+  }
+
+  return normalizePayload({
+    network: options.network,
+    contractId: options.contractId,
+    claimId: String(claim.id),
+    serialHash: onChainHash,
+  });
+}
+
+/** Encode a QR payload string directly from an on-chain `Claim` record after verifying `serialHash`. */
+export function encodeClaimQrFromClaim(
+  claim: OnChainClaimRef,
+  options: ClaimQrFromClaimOptions,
+): string {
+  return encodeClaimQr(claimToQrPayload(claim, options));
 }
 
 function normalizePayload(payload: ClaimQrPayload): ClaimQrPayload {

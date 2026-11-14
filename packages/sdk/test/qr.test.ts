@@ -1,10 +1,14 @@
+import { Buffer } from "buffer";
 import { describe, expect, it } from "vitest";
 import {
+  claimToQrPayload,
   decodeClaimQr,
   encodeClaimQr,
+  encodeClaimQrFromClaim,
   hashSerial,
   isValidContractId,
   parseClaimQr,
+  serialHashToBuffer,
   type ClaimQrPayload,
 } from "../src/qr.js";
 
@@ -65,5 +69,67 @@ describe("claim QR payloads", () => {
         "GCTM224EKYEXNSULQBEW2HRG5CICUWWE46MLSRSASJZUQKXI5E5LK5GT",
       ),
     ).toBe(false);
+  });
+
+  it("builds a QR payload from an on-chain claim and normalizes uppercase hex", () => {
+    const claim = {
+      id: 1n,
+      serial_hash: serialHashToBuffer(SERIAL_HASH.toUpperCase()),
+    };
+    const built = claimToQrPayload(claim, {
+      network: "testnet",
+      contractId: CONTRACT_ID,
+      serialHash: SERIAL_HASH.toUpperCase(),
+    });
+    expect(built).toEqual(payload);
+    expect(
+      encodeClaimQrFromClaim(claim, {
+        network: "testnet",
+        contractId: CONTRACT_ID,
+        serialHash: SERIAL_HASH,
+      }),
+    ).toBe(encodeClaimQr(payload));
+  });
+
+  it("rejects mismatched serial hashes and malformed claim ids when building from a claim", () => {
+    const claim = {
+      id: 1n,
+      serial_hash: Buffer.from(SERIAL_HASH, "hex"),
+    };
+    const wrongHash = "0".repeat(64);
+    expect(() =>
+      encodeClaimQrFromClaim(claim, {
+        network: "testnet",
+        contractId: CONTRACT_ID,
+        serialHash: wrongHash,
+      }),
+    ).toThrow(/serial hash mismatch/);
+
+    expect(() =>
+      claimToQrPayload(
+        { id: 0n, serial_hash: Buffer.from(SERIAL_HASH, "hex") },
+        {
+          network: "testnet",
+          contractId: CONTRACT_ID,
+          serialHash: SERIAL_HASH,
+        },
+      ),
+    ).toThrow(/claim id/);
+
+    expect(() =>
+      claimToQrPayload(
+        {
+          id: 18_446_744_073_709_551_616n,
+          serial_hash: Buffer.from(SERIAL_HASH, "hex"),
+        },
+        {
+          network: "testnet",
+          contractId: CONTRACT_ID,
+          serialHash: SERIAL_HASH,
+        },
+      ),
+    ).toThrow(/claim id/);
+
+    expect(() => serialHashToBuffer("not-hex")).toThrow(/serial hash/);
   });
 });

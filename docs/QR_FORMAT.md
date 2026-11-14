@@ -40,7 +40,12 @@ serial_hash = SHA-256(UTF-8(serial))
 ```
 
 The SDK exposes `hashSerial(serial)` and the demo manifest includes the hash for
-serial `CUP-042`.
+serial `CUP-042`. To build a verified QR payload directly from an on-chain
+`Claim` record (checking that the expected serial hash matches
+`claim.serial_hash` before printing a tag), use `claimToQrPayload(claim, { network, contractId, serialHash })`
+or `encodeClaimQrFromClaim(claim, { network, contractId, serialHash })`, and
+`serialHashToBuffer(serialHash)` when passing the 32-byte digest into contract
+calls.
 
 Why hash?
 
