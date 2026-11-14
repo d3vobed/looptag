@@ -73,6 +73,24 @@ describe("event decoding", () => {
 
     expect(
       decodeLooptagEvent(
+        [
+          topic("merchant_status_changed"),
+          nativeToScVal(ISSUER, { type: "address" }),
+        ],
+        vec(
+          nativeToScVal("Circular Cafe", { type: "string" }),
+          nativeToScVal(false),
+        ),
+      ),
+    ).toEqual({
+      type: "merchant_status_changed",
+      merchant: ISSUER,
+      name: "Circular Cafe",
+      active: false,
+    });
+
+    expect(
+      decodeLooptagEvent(
         [topic("station_changed"), nativeToScVal(ISSUER, { type: "address" })],
         vec(nativeToScVal(STATION, { type: "address" }), nativeToScVal(false)),
       ),
@@ -81,6 +99,23 @@ describe("event decoding", () => {
       issuer: ISSUER,
       station: STATION,
       authorized: false,
+    });
+  });
+
+  it("decodes claim_transferred", () => {
+    expect(
+      decodeLooptagEvent(
+        [topic("claim_transferred"), nativeToScVal(42n, { type: "u64" })],
+        vec(
+          nativeToScVal(OWNER, { type: "address" }),
+          nativeToScVal(STATION, { type: "address" }),
+        ),
+      ),
+    ).toEqual({
+      type: "claim_transferred",
+      claimId: "42",
+      from: OWNER,
+      to: STATION,
     });
   });
 
