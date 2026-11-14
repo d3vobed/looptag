@@ -84,7 +84,8 @@ The important separation:
 - **Suspending a merchant** blocks new issuance but never strands existing
   claims.
 
-Read the full state machine in [docs/LIFECYCLE.md](docs/LIFECYCLE.md) and the
+Read the full state machine in [docs/LIFECYCLE.md](docs/LIFECYCLE.md), the
+contract entry points and event catalog in [docs/API.md](docs/API.md), and the
 trust boundaries in [docs/TRUST_MODEL.md](docs/TRUST_MODEL.md).
 
 ## Repository layout

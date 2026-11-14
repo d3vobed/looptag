@@ -2,7 +2,8 @@
 
 This document is the normative description of a LOOPTAG claim. The Rust
 implementation in `contracts/looptag/src/lib.rs` is the source of truth; this
-page explains the intended sequence and the authorisation rules.
+page explains the intended sequence and the authorisation rules. For a table of
+every public entry point, return type, and event payload, see [API.md](API.md).
 
 ## Actors
 
