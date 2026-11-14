@@ -19,7 +19,7 @@
     "check:all": "pnpm check:docs && pnpm check:deployments && pnpm check:hygiene"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "vitest": "^3.2.4",
     "qrcode": "^1.5.4"
   }
