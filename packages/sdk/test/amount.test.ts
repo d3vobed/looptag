@@ -32,7 +32,17 @@ describe("amounts", () => {
     expect(() => toStroops("1.12345678")).toThrow(/decimal places/);
     expect(() => toStroops("-1")).toThrow(/negative/);
     expect(() => toStroops("1e3")).toThrow(/plain decimal/);
+    expect(() => toStroops("1.23e-7")).toThrow(/plain decimal/);
     expect(() => toStroops("")).toThrow(/empty/);
     expect(() => fromStroops(-1n)).toThrow(/negative/);
+  });
+
+  it("handles exponent-notation numbers safely without silent rounding", () => {
+    expect(toStroops(1e-7)).toBe(1n);
+    expect(() => toStroops(1.23e-7)).toThrow(/decimal string/);
+    expect(() => toStroops(1e21)).toThrow(/decimal string/);
+    expect(() => toStroops(Number.NaN)).toThrow(/finite/);
+    expect(() => toStroops(Number.POSITIVE_INFINITY)).toThrow(/finite/);
+    expect(() => toStroops(Number.NEGATIVE_INFINITY)).toThrow(/finite/);
   });
 });
